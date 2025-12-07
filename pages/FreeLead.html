@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Capture Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23ffffff" opacity="0.05"/><circle cx="90" cy="40" r="0.5" fill="%23ffffff" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            padding: 40px 25px;
+            max-width: 350px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.8s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo i {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+            font-size: 18px;
+            z-index: 2;
+        }
+        input {
+            width: 100%;
+            padding: 15px 15px 15px 70px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            background: #ffffff;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+        input::placeholder {
+            color: #a0aec0;
+            font-weight: 400;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        button:hover::before {
+            left: 100%;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .error-message {
+            color: #e53e3e;
+            font-size: 14px;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            display: none;
+            font-weight: 500;
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #718096;
+            font-size: 14px;
+            font-weight: 400;
+        }
+        /* Tablet Styles */
+        @media (max-width: 768px) {
+            .container {
+                margin: 30px;
+                padding: 35px 25px;
+                max-width: 400px;
+            }
+            h1 {
+                font-size: 26px;
+                margin-bottom: 25px;
+            }
+            .logo i {
+                font-size: 44px;
+            }
+            input {
+                padding: 14px 14px 14px 68px;
+                font-size: 16px;
+            }
+            .input-group i {
+                font-size: 17px;
+                left: 14px;
+            }
+            button {
+                padding: 15px;
+                font-size: 17px;
+            }
+            .footer {
+                font-size: 13px;
+                margin-top: 25px;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 10px;
+                padding: 25px 15px;
+                max-width: 100%;
+                border-radius: 15px;
+            }
+            .logo {
+                margin-bottom: 20px;
+            }
+            .logo i {
+                font-size: 36px;
+            }
+            h1 {
+                font-size: 22px;
+                margin-bottom: 20px;
+                line-height: 1.3;
+            }
+            .input-group {
+                margin-bottom: 20px;
+            }
+            input {
+                padding: 12px 12px 12px 50px;
+                font-size: 16px;
+                border-radius: 10px;
+            }
+            .input-group i {
+                font-size: 14px;
+                left: 12px;
+            }
+            button {
+                padding: 14px;
+                font-size: 16px;
+                border-radius: 10px;
+            }
+            .error-message {
+                font-size: 13px;
+                margin-top: -12px;
+                margin-bottom: 12px;
+            }
+            .footer {
+                font-size: 12px;
+                margin-top: 20px;
+            }
+        }
+
+        /* Small Mobile Styles */
+        @media (max-width: 360px) {
+            .container {
+                padding: 20px 12px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            input {
+                padding: 10px 10px 10px 45px;
+                font-size: 15px;
+            }
+            .input-group i {
+                font-size: 13px;
+                left: 10px;
+            }
+            button {
+                padding: 12px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-gift"></i>
+        </div>
+        <h1>To Get Your Free Copy, Fill Out This Form</h1>
+        <form id="leadForm">
+            <div class="input-group">
+                <!-- <i class="fas fa-user"></i> -->
+                <input type="text" name='Name' id="fullName" placeholder="Full Name" required>
+            </div>
+            <div id="fullNameError" class="error-message"></div>
+            <div class="input-group">
+                <!-- <i class="fas fa-envelope"></i> -->
+                <input type="email" name='Email' id="email" placeholder="Email" required>
+            </div>
+            <div id="emailError" class="error-message"></div>
+            <div class="input-group">
+                <!-- <i class="fas fa-phone"></i> -->
+                <input type="tel" name='MobileNo' id="mobile" placeholder="Mobile Number" required maxlength="10">
+            </div>
+            <div id="mobileError" class="error-message"></div>
+            <input type="hidden" name='ProductName' value="Ebook" id="productName">
+            <div id="productNameError" class="error-message"></div>
+            <button type="submit">
+                <i class="fas fa-paper-plane"></i> Get Your Free Copy
+            </button>
+        </form>
+        <div class="footer">
+            <i class="fas fa-shield-alt"></i> Your information is secure and will never be shared.
+        </div>
+    </div>
+    <script>
+        function showError(fieldId, message) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            document.getElementById(fieldId).style.borderColor = '#e53e3e';
+        }
+
+        function hideError(fieldId) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            errorElement.style.display = 'none';
+            document.getElementById(fieldId).style.borderColor = '#e2e8f0';
+        }
+
+        document.getElementById('leadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Hide all errors first
+            hideError('fullName');
+            hideError('email');
+            hideError('mobile');
+            hideError('productName');
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+            const productName = document.getElementById('productName').value.trim();
+
+
+            let hasErrors = false;
+
+            // Validation
+            if (!fullName) {
+                showError('fullName', 'Full name is required');
+                hasErrors = true;
+            }
+
+            if (!email) {
+                showError('email', 'Email is required');
+                hasErrors = true;
+            } else {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showError('email', 'Please enter a valid email address');
+                    hasErrors = true;
+                }
+            }
+
+            if (!mobile) {
+                showError('mobile', 'Mobile number is required');
+                hasErrors = true;
+            } else {
+                const mobileRegex = /^\d{10}$/;
+                if (!mobileRegex.test(mobile)) {
+                    showError('mobile', 'Mobile number must be exactly 10 digits');
+                    hasErrors = true;
+                }
+            }
+
+            if (hasErrors) {
+                return;
+            }
+
+            // Prepare data
+            const formData = {
+                fullName: fullName,
+                email: email,
+                mobile: mobile,
+                productName:productName
+
+                
+            };
+
+            // Submit to Google Sheets
+            fetch("https://script.google.com/macros/s/AKfycbyVLIDBYDhcJRDxeEP1VQpkPXMY_iq0T0zAxn_B_48v9TigpVHtVQxPhgpRzdwSWJY/exec", {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(() => {
+                // Redirect after successful submission
+                window.location.href = "https://roxymind.in/lead-thank-you/";
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('fullName', 'There was an error submitting the form. Please try again.');
+            });
+        });
+
+        // Real-time validation feedback
+        document.getElementById('fullName').addEventListener('input', function() {
+            // Allow only alphabetic characters and spaces
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+            if (this.value.trim()) {
+                hideError('fullName');
+            }
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+            if (this.value.trim()) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailRegex.test(this.value.trim())) {
+                    hideError('email');
+                }
+            }
+        });
+
+        document.getElementById('mobile').addEventListener('input', function() {
+            // Allow only numeric characters
+            this.value = this.value.replace(/\D/g, '');
+            if (this.value.trim()) {
+                const mobileRegex = /^\d{10}$/;
+                if (mobileRegex.test(this.value.trim())) {
+                    hideError('mobile');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
